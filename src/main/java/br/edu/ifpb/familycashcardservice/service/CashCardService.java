@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class CashCardService {
+public class CashCardService implements ICashCardService {
     private final CashCardRepository cashCardRepository;
 
     public CashCardService(CashCardRepository cashCardRepository) {
