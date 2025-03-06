@@ -23,4 +23,12 @@ public class CashCardService implements ICashCardService {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Override
+    public CashCardDTO save(CashCardDTO newCashCard) {
+        CashCard cashCard = new CashCard(null, newCashCard.amount()); // ID será gerado automaticamente
+        CashCard savedCashCard = cashCardRepository.save(cashCard);
+        return new CashCardDTO(savedCashCard.getId(), savedCashCard.getAmount());
+    }
+
+
 }
