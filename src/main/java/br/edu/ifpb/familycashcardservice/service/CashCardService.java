@@ -6,6 +6,7 @@ import br.edu.ifpb.familycashcardservice.repository.CashCardRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,12 +24,12 @@ public class CashCardService implements ICashCardService {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @Override
     public CashCardDTO save(CashCardDTO newCashCard) {
-        CashCard cashCard = new CashCard(null, newCashCard.amount()); // ID será gerado automaticamente
+        CashCard cashCard = new CashCard(null, newCashCard.amount());
         CashCard savedCashCard = cashCardRepository.save(cashCard);
         return new CashCardDTO(savedCashCard.getId(), savedCashCard.getAmount());
     }
+
 
 
 }
