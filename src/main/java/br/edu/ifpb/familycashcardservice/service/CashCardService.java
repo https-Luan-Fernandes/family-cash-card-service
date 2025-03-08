@@ -3,6 +3,10 @@ package br.edu.ifpb.familycashcardservice.service;
 import br.edu.ifpb.familycashcardservice.dto.CashCardDTO;
 import br.edu.ifpb.familycashcardservice.model.CashCard;
 import br.edu.ifpb.familycashcardservice.repository.CashCardRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +32,15 @@ public class CashCardService implements ICashCardService {
         CashCard cashCard = new CashCard(null, newCashCard.amount());
         CashCard savedCashCard = cashCardRepository.save(cashCard);
         return new CashCardDTO(savedCashCard.getId(), savedCashCard.getAmount());
+    }
+
+    public ResponseEntity<List<CashCardDTO>> findAll(Pageable pageable) {
+        Page<CashCard> page = cashCardRepository.findAll(pageable);
+        List<CashCardDTO> cashCardDTOs = page.getContent()
+                .stream()
+                .map(cashCard -> new CashCardDTO(cashCard.getId(), cashCard.getAmount()))
+                .toList();
+        return ResponseEntity.ok(cashCardDTOs);
     }
 
 

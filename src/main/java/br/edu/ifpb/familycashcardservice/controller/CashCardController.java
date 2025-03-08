@@ -3,11 +3,17 @@ package br.edu.ifpb.familycashcardservice.controller;
 import br.edu.ifpb.familycashcardservice.dto.CashCardDTO;
 import br.edu.ifpb.familycashcardservice.model.CashCard;
 import br.edu.ifpb.familycashcardservice.service.ICashCardService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
+import java.util.Scanner;
 
 
 @RestController
@@ -36,13 +42,13 @@ public class CashCardController {
     }
 
     @GetMapping
-    private ResponseEntity<List<CashCard>> findAll(Pageable pageable) {
-        Page<CashCard> page = cashCardRepository.findAll(
-                PageRequest.of(
-                        pageable.getPageNumber(),
-                        pageable.getPageSize(),
-                        pageable.getSortOr(Sort.by(Sort.Direction.DESC, "amount"))));
-        return ResponseEntity.ok(page.getContent());
+    public ResponseEntity<List<CashCardDTO>> findAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        return cashCardService.findAll(pageable);
     }
 
 }
