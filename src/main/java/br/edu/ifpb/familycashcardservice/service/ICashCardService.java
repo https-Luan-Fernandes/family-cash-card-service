@@ -11,4 +11,6 @@ public interface ICashCardService {
     ResponseEntity<CashCardDTO> findById(Long requestedId);
     CashCardDTO save(CashCardDTO newCashCard);
     ResponseEntity<List<CashCardDTO>> findAll(Pageable pageable);
+
+    ResponseEntity<CashCardDTO> update(Long id, CashCardDTO updatedCashCard);
 }

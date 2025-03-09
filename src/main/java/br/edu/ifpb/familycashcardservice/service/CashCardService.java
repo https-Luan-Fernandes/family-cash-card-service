@@ -43,6 +43,20 @@ public class CashCardService implements ICashCardService {
         return ResponseEntity.ok(cashCardDTOs);
     }
 
+    public ResponseEntity<CashCardDTO> update(Long id, CashCardDTO updatedCashCard) {
+        Optional<CashCard> existingCashCard = cashCardRepository.findById(id);
+
+        if (existingCashCard.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        CashCard cashCard = existingCashCard.get();
+        cashCard.setAmount(updatedCashCard.amount());
+
+        CashCard savedCashCard = cashCardRepository.save(cashCard);
+        return ResponseEntity.ok(new CashCardDTO(savedCashCard.getId(), savedCashCard.getAmount()));
+    }
+
 
 
 }

@@ -51,4 +51,12 @@ public class CashCardController {
         return cashCardService.findAll(pageable);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<CashCardDTO> updateCashCard(
+            @PathVariable Long id,
+            @RequestBody CashCardDTO updatedCashCard) {
+        return cashCardService.update(id, updatedCashCard);
+    }
+
+
 }
