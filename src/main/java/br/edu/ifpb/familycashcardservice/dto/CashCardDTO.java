@@ -1,5 +1,6 @@
 package br.edu.ifpb.familycashcardservice.dto;
 
-import org.springframework.data.annotation.Id;
+import jakarta.validation.constraints.NotNull;
 
-public record CashCardDTO(@Id Long id, Double amount) { }
+public record CashCardDTO(@NotNull Long id,@NotNull Double amount) {
+}

@@ -1,6 +1,6 @@
 package br.edu.ifpb.familycashcardservice;
 
-import br.edu.ifpb.familycashcardservice.model.CashCard;
+import br.edu.ifpb.familycashcardservice.entity.CashCard;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -49,7 +49,7 @@ class FamilyCashCardServiceApplicationTests {
 
     @Test
     void shouldCreateANewCashCard() {
-        CashCard newCashCard = new CashCard(null, 250.00);
+        CashCard newCashCard = new CashCard(250.00);
         ResponseEntity<Void> createResponse = restTemplate.postForEntity("/cashcards", newCashCard, Void.class);
         assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
