@@ -9,6 +9,7 @@ import br.edu.ifpb.familycashcardservice.repository.CashCardRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CashCardServiceImpl implements ICashCardService {
@@ -22,7 +23,8 @@ public class CashCardServiceImpl implements ICashCardService {
 
     @Override
     public CashCardDTO findById(Long requestedId) {
-        return null;
+        CashCard cashCard = cashCardRepository.findById(requestedId).orElse(null);
+        return CashCardMapper.toCashCardDTO(cashCard);
     }
 
     @Override
@@ -34,11 +36,22 @@ public class CashCardServiceImpl implements ICashCardService {
 
     @Override
     public List<CashCardDTO> findAll() {
-        return List.of();
+        return cashCardRepository.findAll()
+                .stream()
+                .map(CashCardMapper::toCashCardDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     public CashCardDTO update(Long id, UpdateCashCardDTO updatedCashCard) {
-        return null;
+        CashCard cashCard = cashCardRepository.findById(id).orElse(null);
+        cashCard.setAmount(updatedCashCard.amount());
+        cashCardRepository.save(cashCard);
+        return CashCardMapper.toCashCardDTO(cashCard);
+    }
+
+    @Override
+    public void delete(Long id) {
+        cashCardRepository.deleteById(id);
     }
 }

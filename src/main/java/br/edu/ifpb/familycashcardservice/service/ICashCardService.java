@@ -13,4 +13,5 @@ public interface ICashCardService {
     CashCardDTO save(CreateCashCardDTO newCashCard);
     List<CashCardDTO> findAll();
     CashCardDTO update(Long id, UpdateCashCardDTO updatedCashCard);
+    void delete(Long id);
 }
