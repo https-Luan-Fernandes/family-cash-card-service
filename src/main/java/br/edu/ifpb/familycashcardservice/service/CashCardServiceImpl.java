@@ -28,11 +28,8 @@ public class CashCardServiceImpl implements ICashCardService {
     }
 
     @Override
-    public CashCardDTO save(CreateCashCardDTO newCashCard) {
-        if(newCashCard.amount() < 0) {
-            throw new IllegalArgumentException(ExceptionMessage.INVALID_AMOUNT.getMessage());
-        }
-        CashCard cashCard = CashCardMapper.toCashCard(newCashCard);
+    public CashCardDTO save(CreateCashCardDTO createCashCardDTO) {
+        CashCard cashCard = CashCardMapper.toCashCard(createCashCardDTO);
         CashCard cashCardSaved = cashCardRepository.save(cashCard);
         return CashCardMapper.toCashCardDTO(cashCardSaved);
     }
@@ -46,14 +43,11 @@ public class CashCardServiceImpl implements ICashCardService {
     }
 
     @Override
-    public CashCardDTO update(Long id, UpdateCashCardDTO updatedCashCard) {
-        if(updatedCashCard.amount() < 0) {
-            throw new IllegalArgumentException(ExceptionMessage.INVALID_AMOUNT.getMessage());
-        }
+    public CashCardDTO update(Long id, UpdateCashCardDTO updateRequest) {
         CashCard cashCard = cashCardRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException(ExceptionMessage.CASHCARD_NOT_FOUND.getMessage())
         );
-        cashCard.setAmount(updatedCashCard.amount());
+        cashCard.setAmount(updateRequest.amount());
         cashCardRepository.save(cashCard);
         return CashCardMapper.toCashCardDTO(cashCard);
     }
@@ -63,6 +57,6 @@ public class CashCardServiceImpl implements ICashCardService {
         CashCard cashCard = cashCardRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException(ExceptionMessage.CASHCARD_NOT_FOUND.getMessage())
         );
-        cashCardRepository.deleteById(cashCard.getId());
+        cashCardRepository.delete(cashCard);
     }
 }
