@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 
 public interface ICashCardService {
     CashCardDTO findById(Long id);
-    CashCardDTO create(CreateCashCardDTO newCashCard);
+    CashCardDTO create(CreateCashCardDTO createCashCardDTO);
     Page<CashCardDTO> findAll(Pageable pageable);
-    CashCardDTO update(Long id, UpdateCashCardDTO updatedCashCard);
+    CashCardDTO update(Long id, UpdateCashCardDTO updateCashCardDTO);
     void delete(Long id);
 }
