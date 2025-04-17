@@ -22,32 +22,32 @@ public class CashCardController {
     private final ICashCardService cashCardService;
 
     @PostMapping
-    public ResponseEntity<CashCardDTO> create(@RequestBody @Valid CreateCashCardDTO createCashCardDTO){
-        log.info("POST api/v1/cashcards - Creating cash card: {}", createCashCardDTO);
+    public ResponseEntity<CashCardDTO> create(@Valid @RequestBody CreateCashCardDTO createCashCardDTO){
+        log.info("[CashCardController] Request - POST api/v1/cashcards - Creating cash card: {}", createCashCardDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(cashCardService.create(createCashCardDTO));
     }
 
     @GetMapping
     public ResponseEntity<Page<CashCardDTO>> findAll(Pageable pageable){
-        log.info("GET api/v1/cashcards - Finding all cash cards, page: {} with size: {}", pageable.getPageNumber(), pageable.getPageSize());
+        log.info("[CashCardController] Request - GET api/v1/cashcards - Finding all cash cards, page: {} with size: {}", pageable.getPageNumber(), pageable.getPageSize());
         return ResponseEntity.ok(cashCardService.findAll(pageable));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CashCardDTO> findById(@PathVariable Long id){
-        log.info("GET api/v1/cashcards/{} - Searching for cash card with ID: {}", id, id);
+        log.info("[CashCardController] Request - GET api/v1/cashcards/{} - Searching for cash card with ID: {}", id, id);
         return ResponseEntity.ok(cashCardService.findById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CashCardDTO> update(@PathVariable Long id, @RequestBody @Valid UpdateCashCardDTO updateCashCardDTO){
-        log.info("PUT api/v1/cashcards/{} - Updating cash card with ID: {} to new value: {}", id, id, updateCashCardDTO);
+    public ResponseEntity<CashCardDTO> update(@PathVariable Long id, @Valid @RequestBody UpdateCashCardDTO updateCashCardDTO){
+        log.info("[CashCardController] Request - PUT api/v1/cashcards/{} - Updating cash card with ID: {} to new value: {}", id, id, updateCashCardDTO);
         return ResponseEntity.ok(cashCardService.update(id, updateCashCardDTO));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
-        log.info("DELETE api/v1/cashcards/{} - Deleting cash card with ID: {}", id, id);
+        log.info("[CashCardController] Request - DELETE api/v1/cashcards/{} - Deleting cash card with ID: {}", id, id);
         cashCardService.delete(id);
         return ResponseEntity.noContent().build();
     }
