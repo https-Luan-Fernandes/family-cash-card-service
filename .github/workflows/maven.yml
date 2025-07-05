@@ -33,6 +33,31 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
+    - name: Save JAR as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-jar
+        path: target/family-cash-card-service-0.0.1-SNAPSHOT.jar
+
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
       uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+      
+  docker:
+  
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+    - uses: actions/checkout@v4
+    - name: Download JAR artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: app-jar
+        path: target
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag httpsluanfernandes01/family-cash-card-service:latest
+    - name: Login to Docker Hub
+      run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u httpsluanfernandes01 --password-stdin
+    - name: Push image to Docker Hub
+      run: docker push httpsluanfernandes01/family-cash-card-service:latest
