@@ -13,7 +13,6 @@ Para que a aplicação consiga se conectar ao banco de dados externo, é necess�
 | `SPRING_DATASOURCE_URL`        | URL de conexão JDBC do banco de dados                         | `jdbc:postgresql://host:5432/db`          |
 | `SPRING_DATASOURCE_USERNAME`   | Nome do usuário do banco de dados                             | `meu_usuario`                             |
 | `SPRING_DATASOURCE_PASSWORD`   | Senha do usuário do banco de dados                            | `minha_senha`                             |
-| `SPRING_JPA_DATABASE_PLATFORM` | Dialeto Hibernate para o banco (opcional, padrão: PostgreSQL) | `org.hibernate.dialect.PostgreSQLDialect` |
 
 ---
 
@@ -27,7 +26,6 @@ docker run -d \
   -e SPRING_DATASOURCE_URL=jdbc:postgresql://meu-host-postgres:5432/minha-base \
   -e SPRING_DATASOURCE_USERNAME=usuario \
   -e SPRING_DATASOURCE_PASSWORD=senha \
-  -e SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect \
   httpsluanfernandes01/family-cash-card-service:latest
 ```
 
@@ -40,5 +38,20 @@ docker run -d \
   ```
   jdbc:postgresql://<host>:<porta>/<nome-do-banco>
   ```
+## Aplicação em Execução
 
-* Se você usar outro banco, ajuste o dialeto Hibernate (`SPRING_JPA_DATABASE_PLATFORM`) para o correspondente.
+### Variáveis de ambiente configuradas no Docker
+![Variáveis de ambiente](docs/images/docker-desktop-env-var.png)
+
+### Container rodando no Docker Desktop
+![Container rodando](docs/images/container-running.png)
+
+### Requisição POST no Postman para criar CashCard
+![POST request](docs/images/post-request.png)
+
+### Requisição GET no Postman para listar CashCards
+![GET request](docs/images/get-request.png)
+
+### Dados persistidos no banco de dados PostgreSQL
+![PostgreSQL dados](docs/images/postgres-select-all.png)
+
